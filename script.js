@@ -2,8 +2,8 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 //Declaro coordenadas del jugador
-let x = 0;
-let y = 0;
+let x = canvas.clientWidth/2;
+let y = canvas.clientHeight/2;
 
 //Booleanos que determinan en qué dirección se mueve
 let LEFT, UP, RIGHT, DOWN;

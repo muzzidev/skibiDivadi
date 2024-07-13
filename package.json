@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "matter-js": "^0.20.0"
+  },
+  "name": "skibidivadi",
+  "version": "1.0.0",
+  "description": "Football heads game",
+  "main": "script.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muzzidev/skibiDivadi.git"
+  },
+  "keywords": [
+    "Football",
+    "Minigame"
+  ],
+  "author": "Muzzidev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muzzidev/skibiDivadi/issues"
+  },
+  "homepage": "https://github.com/muzzidev/skibiDivadi#readme"
+}

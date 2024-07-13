@@ -1,12 +1,20 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+let width = canvas.clientWidth;
+let height = canvas.clientHeight;
+
 //Declaro coordenadas del jugador
-let x = canvas.clientWidth/2;
-let y = canvas.clientHeight/2;
+let x = width / 2;
+let y = height;
+let r = 20;
+
+//Velocidades
+let g = 9.8;
+let v = 2;
 
 //Booleanos que determinan en qué dirección se mueve
-let LEFT, UP, RIGHT, DOWN;
+let LEFT, UP, RIGHT;
 
 //Convertir grados a radianes
 Math.radians = function (grados) {
@@ -15,7 +23,7 @@ Math.radians = function (grados) {
 
 function drawPlayer(x, y, r) {
   ctx.beginPath();
-  ctx.arc(x, y, r, 0, Math.radians(360));
+  ctx.arc(x, y - r, r, 0, Math.radians(360));
   ctx.stroke();
   ctx.fill();
 }
@@ -33,10 +41,6 @@ canvas.addEventListener("keydown", (e) => {
     case 39:
       RIGHT = true;
       break;
-
-    case 40:
-      DOWN = true;
-      break;
   }
 });
 canvas.addEventListener("keyup", (e) => {
@@ -52,33 +56,41 @@ canvas.addEventListener("keyup", (e) => {
     case 39:
       RIGHT = false;
       break;
-
-    case 40:
-      DOWN = false;
-      break;
   }
 });
 
 function move() {
   if (LEFT) {
-    x -= 3;
+    x -= v;
   }
   if (UP) {
-    y -= 3;
+    jump();
   }
   if (RIGHT) {
-    x += 3;
+    x += v;
   }
-  if (DOWN) {
-    y += 3;
+}
+
+function jump() {
+  
+}
+
+//Límites del mapa
+function bounds(){
+  if (x >= width) {
+    x -= v;
+  }
+  if (x <= 0) {
+    x += v;
   }
 }
 
 //Main loop
 function loop() {
-  ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+  ctx.clearRect(0, 0, width, height);
   move();
-  drawPlayer(x, y, 10);
+  bounds();
+  drawPlayer(x, y, r);
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);

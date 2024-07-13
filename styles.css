@@ -1,0 +1,18 @@
+body{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace;
+  font-size: x-large;
+  font-weight: 700;
+}
+#canvas{
+  background-color: #fdf5aa;
+  border: 1px solid black;
+}
+p{
+  margin: 5px;
+}

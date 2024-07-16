@@ -1,96 +1,58 @@
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+// module aliases
+var Engine = Matter.Engine,
+    Render = Matter.Render,
+    Runner = Matter.Runner,
+    Bodies = Matter.Bodies,
+    Composite = Matter.Composite;
 
-let width = canvas.clientWidth;
-let height = canvas.clientHeight;
+// create an engine
+var engine = Engine.create();
 
-//Declaro coordenadas del jugador
-let x = width / 2;
-let y = height;
-let r = 20;
+var body = Matter.Body.create();
+var vertices = Matter.Vertices.create([[]], body)
 
-//Velocidades
-let g = 9.8;
-let v = 2;
-
-//Booleanos que determinan en qué dirección se mueve
-let LEFT, UP, RIGHT;
-
-//Convertir grados a radianes
-Math.radians = function (grados) {
-  return (Math.PI / 180) * grados;
-};
-
-function drawPlayer(x, y, r) {
-  ctx.beginPath();
-  ctx.arc(x, y - r, r, 0, Math.radians(360));
-  ctx.stroke();
-  ctx.fill();
-}
-
-canvas.addEventListener("keydown", (e) => {
-  switch (e.keyCode) {
-    case 37:
-      LEFT = true;
-      break;
-
-    case 38:
-      UP = true;
-      break;
-
-    case 39:
-      RIGHT = true;
-      break;
-  }
-});
-canvas.addEventListener("keyup", (e) => {
-  switch (e.keyCode) {
-    case 37:
-      LEFT = false;
-      break;
-
-    case 38:
-      UP = false;
-      break;
-
-    case 39:
-      RIGHT = false;
-      break;
-  }
+// create a renderer
+var render = Render.create({
+    element: document.body,
+    engine: engine
 });
 
-function move() {
-  if (LEFT) {
-    x -= v;
-  }
-  if (UP) {
-    jump();
-  }
-  if (RIGHT) {
-    x += v;
-  }
+var options = {
+  restitution: .65
 }
 
-function jump() {
+
+// create two boxes and a ground
+var pelota = Bodies.circle(400, 200, 80, options, 80);
+var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+
+// add all of the bodies to the world
+Composite.add(engine.world, [pelota, ground]);
+
+// run the renderer
+Render.run(render);
+
+// create runner
+var runner = Runner.create();
+
+// run the engine
+Runner.run(runner, engine);
+
+// Click event
+document.addEventListener("click", e => {
+  Composite.add(engine.world, Bodies.circle(e.clientX, e.clientY, 80, options, 80));
+})
+
+// Update function
+function update() {
+  velocidadPelota = Matter.Body.getSpeed(pelota); 
+  console.log(pelota.restitution);
+
   
+
+  // Call update on the next frame
+  requestAnimationFrame(update);
 }
 
-//Límites del mapa
-function bounds(){
-  if (x >= width) {
-    x -= v;
-  }
-  if (x <= 0) {
-    x += v;
-  }
-}
-
-//Main loop
-function loop() {
-  ctx.clearRect(0, 0, width, height);
-  move();
-  bounds();
-  drawPlayer(x, y, r);
-  requestAnimationFrame(loop);
-}
-requestAnimationFrame(loop);
+// Start the update loop
+update();

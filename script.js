@@ -1,58 +1,39 @@
-// module aliases
-var Engine = Matter.Engine,
-    Render = Matter.Render,
-    Runner = Matter.Runner,
-    Bodies = Matter.Bodies,
-    Composite = Matter.Composite;
+/*
+//El dvadi original mide 800px x 550px en una pantalla de 1024px 
+*/
 
-// create an engine
-var engine = Engine.create();
+/* global Phaser */
 
-var body = Matter.Body.create();
-var vertices = Matter.Vertices.create([[]], body)
-
-// create a renderer
-var render = Render.create({
-    element: document.body,
-    engine: engine
-});
-
-var options = {
-  restitution: .65
+const config = {
+  type: Phaser.AUTO, //primero intenta usar WebGL, luego Canvas
+  width: .78*window.innerWidth,
+  height: .9*window.innerHeight,
+  backgroundColor: '#758',
+  parent: 'dvadi',
+  scene: {
+    preload, // se ejecuta para precargar recursos del juego
+    create, // se ejecuta cuando se inicia
+    update // se ejecuta cada frame
+  }
 }
 
+new Phaser.Game(config);
 
-// create two boxes and a ground
-var pelota = Bodies.circle(400, 200, 80, options, 80);
-var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
-
-// add all of the bodies to the world
-Composite.add(engine.world, [pelota, ground]);
-
-// run the renderer
-Render.run(render);
-
-// create runner
-var runner = Runner.create();
-
-// run the engine
-Runner.run(runner, engine);
-
-// Click event
-document.addEventListener("click", e => {
-  Composite.add(engine.world, Bodies.circle(e.clientX, e.clientY, 80, options, 80));
-})
-
-// Update function
-function update() {
-  velocidadPelota = Matter.Body.getSpeed(pelota); 
-  console.log(pelota.restitution);
-
-  
-
-  // Call update on the next frame
-  requestAnimationFrame(update);
+function preload () {
+  console.log('preload');
+  this.load.image(
+    'placeholder1',
+    './assets/placeholder1.png'
+  )
 }
 
-// Start the update loop
-update();
+function create () {
+  console.log('create');
+  this.add.image(10, 10, 'placeholder1')
+  .setOrigin(0, 0)
+  .setScale(5);
+}
+
+function update () {
+  console.log('update');
+}

@@ -8,8 +8,17 @@ const config = {
   type: Phaser.AUTO, //primero intenta usar WebGL, luego Canvas
   width: .78*window.innerWidth,
   height: .9*window.innerHeight,
-  backgroundColor: '#758',
+  backgroundColor: '#00913f',
   parent: 'dvadi',
+  pixelArt: true,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 700 },
+      debug: true
+    }
+  },
+  
   scene: {
     preload, // se ejecuta para precargar recursos del juego
     create, // se ejecuta cuando se inicia
@@ -22,18 +31,43 @@ new Phaser.Game(config);
 function preload () {
   console.log('preload');
   this.load.image(
-    'placeholder1',
-    './assets/placeholder1.png'
+    'dvadi1',
+    './assets/dvadi1.png'
+  )
+  this.load.image(
+    'floor',
+    './assets/floor.png'
   )
 }
 
 function create () {
-  console.log('create');
-  this.add.image(10, 10, 'placeholder1')
-  .setOrigin(0, 0)
-  .setScale(5);
+
+  this.floor = this.physics.add.staticGroup();
+
+  this.floor
+    .create(0, config.height-10, 'floor')
+    .setOrigin(0, 0)
+    .setScale(10)
+    .refreshBody()
+
+  this.dvadi1 = this.physics.add.image(0, config.height-30, 'dvadi1')
+  .setOrigin(0, 1)
+  .setScale(.3)
+  .setCollideWorldBounds(true)
+
+  this.physics.add.collider(this.dvadi1, this.floor)
+
+  this.keys = this.input.keyboard.createCursorKeys();
 }
 
 function update () {
-  console.log('update');
+  if (this.keys.left.isDown) {
+    this.dvadi1.x -= 3;
+  } else if(this.keys.right.isDown){
+    this.dvadi1.x += 3;
+  }
+
+  if (this.keys.up.isDown && this.dvadi1.body.touching.down) {
+    this.dvadi1.setVelocityY(-350);
+  }
 }

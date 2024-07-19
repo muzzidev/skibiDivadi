@@ -4,6 +4,7 @@
 
 /* global Phaser */
 
+
 const config = {
   type: Phaser.AUTO, //primero intenta usar WebGL, luego Canvas
   width: .78*window.innerWidth,
@@ -49,11 +50,12 @@ function create () {
     .setOrigin(0, 0)
     .setScale(10)
     .refreshBody()
-
+    
   this.dvadi1 = this.physics.add.image(0, config.height-30, 'dvadi1')
-  .setOrigin(0, 1)
-  .setScale(.3)
-  .setCollideWorldBounds(true)
+    .setOrigin(0, 1)
+    .setScale(.3)
+    .refreshBody()
+    .setCollideWorldBounds(true)
 
   this.physics.add.collider(this.dvadi1, this.floor)
 
@@ -66,7 +68,6 @@ function update () {
   } else if(this.keys.right.isDown){
     this.dvadi1.x += 3;
   }
-
   if (this.keys.up.isDown && this.dvadi1.body.touching.down) {
     this.dvadi1.setVelocityY(-350);
   }

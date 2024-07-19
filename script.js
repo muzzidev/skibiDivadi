@@ -53,7 +53,6 @@ function create () {
     
   this.dvadi1 = this.physics.add.image(0, config.height-30, 'dvadi1')
     .setOrigin(0, 1)
-    .setScale(.3)
     .refreshBody()
     .setCollideWorldBounds(true)
 

@@ -1,14 +1,13 @@
 /*
 //El dvadi original mide 800px x 550px en una pantalla de 1024px 
 */
-
+let dvadi = document.getElementById("dvadi");
+let juego = getComputedStyle(dvadi);
 /* global Phaser */
-
-
 const config = {
   type: Phaser.AUTO, //primero intenta usar WebGL, luego Canvas
-  width: .78*window.innerWidth,
-  height: .9*window.innerHeight,
+  width: 800,
+  height: 500,
   backgroundColor: '#00913f',
   parent: 'dvadi',
   pixelArt: true,
@@ -30,15 +29,8 @@ const config = {
 new Phaser.Game(config);
 
 function preload () {
-  console.log('preload');
-  this.load.image(
-    'dvadi1',
-    './assets/dvadi1.png'
-  )
-  this.load.image(
-    'floor',
-    './assets/floor.png'
-  )
+  this.load.image('dvadi1', './assets/dvadi1.png')
+  this.load.image('floor', './assets/floor.png')
 }
 
 function create () {
@@ -55,6 +47,7 @@ function create () {
     .setOrigin(0, 1)
     .refreshBody()
     .setCollideWorldBounds(true)
+    .setCircle(20, 0, 5)
 
   this.physics.add.collider(this.dvadi1, this.floor)
 
@@ -63,11 +56,12 @@ function create () {
 
 function update () {
   if (this.keys.left.isDown) {
-    this.dvadi1.x -= 3;
+    this.dvadi1.setVelocityX(-160);
   } else if(this.keys.right.isDown){
     this.dvadi1.x += 3;
   }
   if (this.keys.up.isDown && this.dvadi1.body.touching.down) {
     this.dvadi1.setVelocityY(-350);
   }
+
 }

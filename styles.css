@@ -1,18 +1,11 @@
-body{
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  font-family: monospace;
-  font-size: x-large;
-  font-weight: 700;
+body {
+  background-color: black;
+  display: grid;
+  place-items: center;
+  height: 100vh;
 }
-#canvas{
-  background-color: #fdf5aa;
-  border: 1px solid black;
-}
-p{
-  margin: 5px;
+#dvadi {
+  width: 800px;
+  height: 500px;
+  border: 1px solid white;
 }

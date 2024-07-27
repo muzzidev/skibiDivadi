@@ -29,8 +29,8 @@ const config = {
 new Phaser.Game(config);
 
 function preload () {
-  this.load.image('dvadi1', './assets/dvadi1.png')
-  this.load.image('floor', './assets/floor.png')
+  this.load.image('dvadi1', 'assets/dvadi1.png')
+  this.load.image('floor', 'assets/floor.png')
 }
 
 function create () {
@@ -58,7 +58,9 @@ function update () {
   if (this.keys.left.isDown) {
     this.dvadi1.setVelocityX(-160);
   } else if(this.keys.right.isDown){
-    this.dvadi1.x += 3;
+    this.dvadi1.setVelocityX(160);
+  } else {
+    this.dvadi1.setVelocityX(0);
   }
   if (this.keys.up.isDown && this.dvadi1.body.touching.down) {
     this.dvadi1.setVelocityY(-350);

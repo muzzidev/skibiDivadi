@@ -31,6 +31,7 @@ new Phaser.Game(config);
 function preload () {
   this.load.image('dvadi1', 'assets/dvadi1.png')
   this.load.image('floor', 'assets/floor.png')
+  this.load.image('pelota', 'assets/pelota.png')
 }
 
 function create () {
@@ -43,13 +44,22 @@ function create () {
     .setScale(10)
     .refreshBody()
     
-  this.dvadi1 = this.physics.add.image(0, config.height-30, 'dvadi1')
+  this.dvadi1 = this.physics.add.image(config.width-200, config.height-30, 'dvadi1')
     .setOrigin(0, 1)
     .refreshBody()
     .setCollideWorldBounds(true)
     .setCircle(20, 0, 5)
 
-  this.physics.add.collider(this.dvadi1, this.floor)
+  this.pelota = this.physics.add.image(0, config.height-30, 'pelota')
+    .setScale(.1)
+    .setOrigin(0, 1)
+    .refreshBody()
+    .setCollideWorldBounds(true)
+
+  this.pelota.setCircle(10, 0, 1);
+    this.physics.add.collider(this.dvadi1, this.floor)
+    this.physics.add.collider(this.dvadi1, this.pelota)
+    this.physics.add.collider(this.floor, this.pelota)
 
   this.keys = this.input.keyboard.createCursorKeys();
 }

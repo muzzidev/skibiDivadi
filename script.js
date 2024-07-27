@@ -50,13 +50,14 @@ function create () {
     .setCollideWorldBounds(true)
     .setCircle(20, 0, 5)
 
-  this.pelota = this.physics.add.image(0, config.height-30, 'pelota')
+  this.pelota = this.physics.add.image(0, 0, 'pelota')
     .setScale(.1)
     .setOrigin(0, 1)
     .refreshBody()
     .setCollideWorldBounds(true)
+    .setBounce(.75)
 
-  this.pelota.setCircle(10, 0, 1);
+  this.pelota.setCircle(200, 0, 1);
     this.physics.add.collider(this.dvadi1, this.floor)
     this.physics.add.collider(this.dvadi1, this.pelota)
     this.physics.add.collider(this.floor, this.pelota)
